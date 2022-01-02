@@ -36,6 +36,10 @@ wireguard_address: 10.200.88.0/24
 wireguard_server_ip: "{{ wireguard_address | ipaddr('network') | ipmath(1) }}"
 wireguard_subnetmask: "{{ wireguard_address | ipaddr('prefix') }}"
 
+# The default state of the wireguard service
+wireguard_service_enabled: "yes"
+wireguard_service_state: "started"
+
 # # XXX: This role only works with PrivateKeyFile/PresharedKeyFile it doesn't support variables.
 # wireguard_systemd_netdev:
 #   - NetDev:
