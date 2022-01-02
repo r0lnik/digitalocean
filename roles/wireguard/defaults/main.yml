@@ -36,24 +36,24 @@ wireguard_address: 10.200.88.0/24
 wireguard_server_ip: "{{ wireguard_address | ipaddr('network') | ipmath(1) }}"
 wireguard_subnetmask: "{{ wireguard_address | ipaddr('prefix') }}"
 
-# XXX: This role only works with PrivateKeyFile/PresharedKeyFile it doesn't support variables.
-wireguard_systemd_netdev:
-  - NetDev:
-      - Name: "{{ wireguard_interface }}"
-      - Kind: wireguard
-      - Description: "wireguard server: {{ wireguard_interface}} server on {{ wireguard_address }}"
-  - WireGuard:
-      - PrivateKey: "{{ _privkey_value['content'] | b64decode }}"
-      - ListenPort: "{{ wireguard_port }}"
+# # XXX: This role only works with PrivateKeyFile/PresharedKeyFile it doesn't support variables.
+# wireguard_systemd_netdev:
+#   - NetDev:
+#       - Name: "{{ wireguard_interface }}"
+#       - Kind: wireguard
+#       - Description: "wireguard server: {{ wireguard_interface}} server on {{ wireguard_address }}"
+#   - WireGuard:
+#       - PrivateKey: "{{ _privkey_value['content'] | b64decode }}"
+#       - ListenPort: "{{ wireguard_port }}"
 
-wireguard_systemd_network:
-  - Match:
-      - Name: "{{ wireguard_interface }}"
-  - Network:
-      - Address: "{{ wireguard_server_ip }}/{{ wireguard_subnetmask }}"
-  - Route:
-      - Destination: "{{ wireguard_address }}"
-      - Gateway: "{{ wireguard_server_ip }}"
+# wireguard_systemd_network:
+#   - Match:
+#       - Name: "{{ wireguard_interface }}"
+#   - Network:
+#       - Address: "{{ wireguard_server_ip }}/{{ wireguard_subnetmask }}"
+#   - Route:
+#       - Destination: "{{ wireguard_address }}"
+#       - Gateway: "{{ wireguard_server_ip }}"
 
 wireguard_keepalive: 25
 

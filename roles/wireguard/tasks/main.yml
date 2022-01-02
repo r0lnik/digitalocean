@@ -65,24 +65,70 @@
   set_fact:
     peers: "{{ lookup('template', 'templates/peers.j2') | from_yaml }}"
 
-- name: copy .netdev profiles
-  template:
-    src: "systemd-networkd.conf.j2"
-    dest: "{{ wireguard_systemd_path }}/{{ wireguard_interface }}.netdev"
-    mode: 0644
-  vars:
-    systemd_config: "{{ wireguard_systemd_netdev + (peers | list) }}"
-  notify:
-    - reload systemd
-    - restart systemd-networkd
+- name: Setup ipv4 IP forward
+  sysctl:
+    name: net.ipv4.ip_forward
+    value: 1
+    sysctl_set: true
+    state: present
+    reload: true
 
-- name: copy .network profiles
+- name: Create WireGuard configuration directory
+  file:
+    dest: "{{ wireguard_remote_directory }}"
+    state: directory
+    mode: 0700
+  tags:
+    - wg-config
+
+- name: Generate WireGuard configuration file
   template:
-    src: "systemd-networkd.conf.j2"
-    dest: "{{ wireguard_systemd_path }}/{{ wireguard_interface }}.network"
-    mode: 0644
-  vars:
-    systemd_config: "{{ wireguard_systemd_network }}"
+    src: etc/wireguard/wg.conf.j2
+    dest: "{{ wireguard_remote_directory }}/{{ wireguard_interface }}.conf"
+    owner: "{{ wireguard_conf_owner }}"
+    group: "{{ wireguard_conf_group }}"
+    mode: "{{ wireguard_conf_mode }}"
+  no_log: '{{ ansible_verbosity < 3 }}'
+  tags:
+    - wg-config
   notify:
-    - reload systemd
-    - restart systemd-networkd
+    - reconfigure wireguard
+
+- name: Ensure legacy reload-module-on-update is absent
+  file:
+    dest: "{{ wireguard_remote_directory }}/.reload-module-on-update"
+    state: absent
+  tags:
+    - wg-config
+
+- name: Start and enable WireGuard service
+  service:
+    name: "wg-quick@{{ wireguard_interface }}"
+    state: "{{ wireguard_service_state }}"
+    enabled: "{{ wireguard_service_enabled }}"
+  when: not ansible_os_family == 'Darwin'
+
+  
+
+
+# - name: copy .netdev profiles
+#   template:
+#     src: "systemd-networkd.conf.j2"
+#     dest: "{{ wireguard_systemd_path }}/{{ wireguard_interface }}.netdev"
+#     mode: 0644
+#   vars:
+#     systemd_config: "{{ wireguard_systemd_netdev + (peers | list) }}"
+#   notify:
+#     - reload systemd
+#     - restart systemd-networkd
+
+# - name: copy .network profiles
+#   template:
+#     src: "systemd-networkd.conf.j2"
+#     dest: "{{ wireguard_systemd_path }}/{{ wireguard_interface }}.network"
+#     mode: 0644
+#   vars:
+#     systemd_config: "{{ wireguard_systemd_network }}"
+#   notify:
+#     - reload systemd
+#     - restart systemd-networkd
