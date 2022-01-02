@@ -85,8 +85,8 @@
   template:
     src: etc/wireguard/wg.conf.j2
     dest: "{{ wireguard_dir }}/{{ wireguard_interface }}.conf"
-    owner: "{{ wireguard_conf_owner }}"
-    group: "{{ wireguard_conf_group }}"
+    #owner: "{{ wireguard_conf_owner }}"
+    #group: "{{ wireguard_conf_group }}"
     mode: "{{ wireguard_conf_mode }}"
   #no_log: '{{ ansible_verbosity < 3 }}'
   tags:
