@@ -20,8 +20,6 @@
     state: present
 
 #server configure
----
-
 - name: Test if private key is already present
   stat:
     path: "{{ wireguard_privatekey_path }}"
