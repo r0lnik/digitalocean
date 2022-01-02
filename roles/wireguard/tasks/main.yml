@@ -87,7 +87,7 @@
     dest: "{{ wireguard_dir }}/{{ wireguard_interface }}.conf"
     #owner: "{{ wireguard_conf_owner }}"
     #group: "{{ wireguard_conf_group }}"
-    mode: "{{ wireguard_conf_mode }}"
+    #mode: "{{ wireguard_conf_mode }}"
   #no_log: '{{ ansible_verbosity < 3 }}'
   tags:
     - wg-config
