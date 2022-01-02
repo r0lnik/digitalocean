@@ -1,17 +1,10 @@
 ---
-# handlers file for os-update-role
-- name: reboot
-  reboot:
 
-- name: reboot rhel6
-  when: ansible_distribution_major_version == "6"
-  reboot:
-   search_paths:
-     - '/usr/bin'
-     - '/usr/sbin'
-     - '/bin'
-     - '/sbin'
+- name: reload systemd
+  systemd:
+    daemon_reload: true
 
-
-
-
+- name: restart systemd-networkd
+  service:
+    name: systemd-networkd
+    state: restarted
