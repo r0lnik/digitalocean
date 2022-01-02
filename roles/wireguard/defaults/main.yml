@@ -1,2 +1,21 @@
 ---
-# defaults file for os-update-role
+# install and configure modules
+- name: (Rocky Linux 8) Install EPEL & ELRepo repository
+  yum:
+    name:
+      - epel-release
+      - elrepo-release
+    update_cache: true
+
+- name: (Rocky Linux 8) Ensure WireGuard DKMS package is removed
+  yum:
+    name:
+      - "wireguard-dkms"
+    state: absent
+
+- name: (Rocky Linux 8) Install WireGuard packages
+  yum:
+    name:
+      - "kmod-wireguard"
+      - "wireguard-tools"
+    state: present
