@@ -1,0 +1,14 @@
+# #VMVARE VARS
+# vcenter_hostname:
+# vcenter_username:
+# vcenter_password:
+
+# ##RHEL/OEL BLOCK
+# exclude_pakages:
+# skip_broken:
+# disable_repos:
+# enable_repos:
+
+# #FREEBSD BLOCK
+
+
