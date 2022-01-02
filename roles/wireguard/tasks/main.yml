@@ -75,7 +75,7 @@
 
 - name: Create WireGuard configuration directory
   file:
-    dest: "{{ wireguard_remote_directory }}"
+    dest: "{{ wireguard_dir }}"
     state: directory
     mode: 0700
   tags:
@@ -84,7 +84,7 @@
 - name: Generate WireGuard configuration file
   template:
     src: etc/wireguard/wg.conf.j2
-    dest: "{{ wireguard_remote_directory }}/{{ wireguard_interface }}.conf"
+    dest: "{{ wireguard_dir }}/{{ wireguard_interface }}.conf"
     owner: "{{ wireguard_conf_owner }}"
     group: "{{ wireguard_conf_group }}"
     mode: "{{ wireguard_conf_mode }}"
@@ -96,7 +96,7 @@
 
 - name: Ensure legacy reload-module-on-update is absent
   file:
-    dest: "{{ wireguard_remote_directory }}/.reload-module-on-update"
+    dest: "{{ wireguard_dir }}/.reload-module-on-update"
     state: absent
   tags:
     - wg-config
@@ -108,7 +108,7 @@
     enabled: "{{ wireguard_service_enabled }}"
   when: not ansible_os_family == 'Darwin'
 
-  
+
 
 
 # - name: copy .netdev profiles
