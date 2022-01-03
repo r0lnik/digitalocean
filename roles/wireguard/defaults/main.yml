@@ -63,10 +63,10 @@ wireguard_keepalive: 25
 
 wireguard_peers_allowed_ips: "{{ ([(_wireguard_interface_addr | ipaddr('net'))] + wireguard_additional_routes) | join(\", \") }}"
 wireguard_peers: []
-- name: uuser88
-  allowed_ip: "10.200.88.88/32"
-  publickey: "8YI8pOoB2QRQldBjDZp5cfkYC5ihd52x2ZhVwmfc+C0="
-  
+  - name: user88
+    allowed_ip: "10.200.88.88/32"
+    publickey: "8YI8pOoB2QRQldBjDZp5cfkYC5ihd52x2ZhVwmfc+C0="
+
 #   allowed_ip: "10.213.213.2/32"
 #   publickey: "asdasdasdadsasdasd"
 # - name: user2
