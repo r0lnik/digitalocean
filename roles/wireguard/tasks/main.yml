@@ -108,33 +108,29 @@
     enabled: "{{ wireguard_service_enabled }}"
   when: not ansible_os_family == 'Darwin'
 
-- name: firewall config
-  block:
-    - name: Add port to public zone
-      firewalld:
-        zone: public
-        port: 51820/tcp
-        permanent: true
-        state: enabled
-      register: firewalld_changed
+- name: Add port to public zone
+  firewalld:
+    zone: public
+    port: 51820/tcp
+    permanent: true
+    state: enabled
+  register: firewalld_changed
+
+- name: Add interface to internal zone
+  firewalld:
+    zone: internal
+    interface: wg0
+    permanent: true
+    state: enabled
+  register: firewalld_changed
     
-    - name: Add interface to internal zone
-      firewalld:
-        zone: internal
-        interface: wg0
-        permanent: true
-        state: enabled
-      register: firewalld_changed
-        
-    - name: Masquerade
-      firewalld:
-        zone: public
-        rich_rule: 'rule family=ipv4 source address=10.8.0.0/24 masquerade'
-        permanent: true
-        state: enabled
-      register: firewalld_changed
-  notify: 
-    - firewall reload 
+- name: Masquerade
+  firewalld:
+    zone: public
+    rich_rule: 'rule family=ipv4 source address=10.8.0.0/24 masquerade'
+    permanent: true
+    state: enabled
+  register: firewalld_changed
 
 - name: reload service firewalld
   systemd:
