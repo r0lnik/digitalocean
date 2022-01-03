@@ -111,7 +111,7 @@
 - name: Add port to public zone
   firewalld:
     zone: public
-    port: 51820
+    port: 51820/tcp
     permanent: true
     state: enabled
 
