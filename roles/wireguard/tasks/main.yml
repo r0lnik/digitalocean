@@ -116,6 +116,7 @@
         port: 51820/tcp
         permanent: true
         state: enabled
+      register: firewalld_changed
     
     - name: Add interface to internal zone
       firewalld:
@@ -123,6 +124,7 @@
         interface: wg0
         permanent: true
         state: enabled
+      register: firewalld_changed
         
     - name: Masquerade
       firewalld:
@@ -130,8 +132,21 @@
         rich_rule: 'rule family=ipv4 source address=10.8.0.0/24 masquerade'
         permanent: true
         state: enabled
+      register: firewalld_changed
   notify: 
     - firewall reload 
+
+- name: reload service firewalld
+  systemd:
+    name: firewalld
+    state: reloaded
+  when: "firewalld_changed is changed"
+
+  - name: Cleanup secrets from memory
+    set_fact:
+      _pskkey_value: ""
+      _pubkey_value: ""
+      _privkey_value: ""
 
 
 # - name: copy .netdev profiles
