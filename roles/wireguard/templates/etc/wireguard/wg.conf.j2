@@ -7,7 +7,7 @@
 [Interface]
 # {{ inventory_hostname }}
 Address = {{ wireguard_address }}
-PrivateKey = {{ _privkey_value.content }}
+PrivateKey = {{ _privkey_value.content | b64decode }}
 ListenPort = {{ wireguard_port }}
 {% if wireguard_dns is defined %}
 DNS = {{ wireguard_dns }}
