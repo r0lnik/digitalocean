@@ -142,11 +142,11 @@
     state: reloaded
   when: "firewalld_changed is changed"
 
-  - name: Cleanup secrets from memory
-    set_fact:
-      _pskkey_value: ""
-      _pubkey_value: ""
-      _privkey_value: ""
+- name: Cleanup secrets from memory
+  set_fact:
+    _pskkey_value: ""
+    _pubkey_value: ""
+    _privkey_value: ""
 
 
 # - name: copy .netdev profiles
