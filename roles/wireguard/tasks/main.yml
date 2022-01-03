@@ -136,7 +136,7 @@
   systemd:
     name: firewalld
     state: reloaded
-  when: "firewalld_changed is changed"
+  when: firewalld_changed is defined
 
 - name: Cleanup secrets from memory
   set_fact:
