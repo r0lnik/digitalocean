@@ -37,3 +37,9 @@
     - not ansible_os_family == 'Darwin'
     - wireguard_service_enabled == "yes"
   listen: "reconfigure wireguard"
+
+  - name: reload service firewalld
+    systemd:
+      name: firewalld
+      state: reloaded
+  listen: ""
