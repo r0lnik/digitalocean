@@ -108,7 +108,26 @@
     enabled: "{{ wireguard_service_enabled }}"
   when: not ansible_os_family == 'Darwin'
 
+- name: Add port to public zone
+  firewalld:
+    zone: public
+    port: 51820
+    permanent: true
+    state: enabled
 
+- name: Add interface to internal zone
+  firewalld:
+    zone: internal
+    interface: wg0
+    permanent: true
+    state: enabled
+    
+- name: Masquerade
+  firewalld:
+    zone: public
+    rich_rule: 'rule family=ipv4 source address=10.8.0.0/24 masquerade'
+    permanent: true
+    state: enabled
 
 
 # - name: copy .netdev profiles
