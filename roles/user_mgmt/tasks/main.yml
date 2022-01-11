@@ -35,14 +35,14 @@
     - restart ssh
 
 
- name: Set authorized key, removing all the authorized keys already set
- authorized_key:
-   user: rolnik
-   key: '{{ item }}'
-   state: present
-   exclusive: True
- with_file:
-   - public_keys/rolnik
+- name: Set authorized key, removing all the authorized keys already set
+  authorized_key:
+    user: rolnik
+    key: '{{ item }}'
+    state: present
+    exclusive: True
+  with_file:
+    - public_keys/rolnik
 
 
 
