@@ -14,12 +14,13 @@
 
 - name: Add several users
   ansible.builtin.user:
-    name: "{{ item.name }}"
+    name: "{{ username }}"
     state: present
-    groups: "{{ item.groups }}"
+    groups: "{{ item }}"
+    append: no
   loop:
-    - { name: 'rolnik', groups: 'wheel' }
-    - { name: 'rolnik', groups: 'tech_awx' }
+    - tech_awx
+    - wheel
 
 
 
