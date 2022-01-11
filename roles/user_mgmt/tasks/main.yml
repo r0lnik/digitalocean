@@ -1,5 +1,11 @@
 
 
+- name: Concatenate a list of groups  to string
+  set_fact:
+    memberofstring: "{{ memberof | join(',') }}"
+
+
+
 - name: Add grpups
   group: 
     name: '{{ item }}'
@@ -14,7 +20,7 @@
   ansible.builtin.user:
     name: '{{ username }}'
     state: present
-    groups: '{{ memberof }}'
+    groups: '{{ memberofstring }}'
     append: yes
   tags:
     - user_mgmt
