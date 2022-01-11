@@ -16,12 +16,13 @@
   ansible.builtin.user:
     name: "{{ username }}"
     state: present
-    groups: "{{ item }}"
+    groups: "{{ groups }}"
     append: no
-  loop:
-    - tech_awx
-    - wheel
-
+  # loop:
+  #   - tech_awx
+  #   - wheel
+  tags:
+    - user_mgmt
 
 
 
@@ -31,8 +32,11 @@
     path: /etc/sudoers
     state: present
     #egexp: '^%sudo'
-    line: '%tech_awx ALL=(ALL) NOPASSWD: ALL'
+    line: '{{  sudoer  }} ALL=(ALL) NOPASSWD: ALL'
     validate: 'visudo -cf %s'
+    backup: yes
+  tags:
+    - sudoers
 
 - name: sudoers line
   lineinfile:
@@ -40,7 +44,10 @@
     state: absent
     #egexp: '^%sudo'
     line: '%tech-awx ALL=(ALL) NOPASSWD: ALL'
-    validate: 'visudo -cf %s'
+    validate: 'visudo -cf %s
+    backup: yes
+  tags:
+    - sudoers
 
 - name: Disable Root Login
   lineinfile:
@@ -51,6 +58,8 @@
         backup: yes
   notify:
     - restart ssh
+  tags:
+    - sshdcfg
 
 
 - name: Set authorized key, removing all the authorized keys already set
@@ -61,7 +70,8 @@
     exclusive: True
   with_file:
     - pubkeys/rolnik
-
+  tags:
+    - sshdcfg
 
 
 
