@@ -52,7 +52,7 @@
     state: present
     exclusive: True
   with_file:
-    - public_keys/rolnik
+    - pubkeys/rolnik
 
 
 
