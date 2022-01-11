@@ -1,15 +1,11 @@
 
-# - name: Added a consultant whose account you want to expire
-#   user:
-#     name: rolnik
-#     groups: wheel
-#     #expires: 1422403387
-#     #shell: /bin/zsh
-# - name: Add grpups
-#   group: 
-#     name: tech_awx
-#     state: present
 
+- name: Add grpups
+  group: 
+    name: '{{  memberof  }}'
+    state: present
+  tags:
+    - user_mgmt
 
 
 - name: Add several users
@@ -18,9 +14,6 @@
     state: present
     groups: '{{ memberof }}'
     append: yes
-  # loop:
-  #   - tech_awx
-  #   - wheel
   tags:
     - user_mgmt
 
