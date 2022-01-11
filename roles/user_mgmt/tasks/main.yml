@@ -16,7 +16,7 @@
   ansible.builtin.user:
     name: '{{ username }}'
     state: present
-    groups: '{{ groups }}'
+    groups: '{{ memberof }}'
     append: yes
   # loop:
   #   - tech_awx
