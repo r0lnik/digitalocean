@@ -34,6 +34,13 @@
     line: '%tech_awx ALL=(ALL) NOPASSWD: ALL'
     validate: 'visudo -cf %s'
 
+- name: sudoers line
+  lineinfile:
+    path: /etc/sudoers
+    state: absent
+    #egexp: '^%sudo'
+    line: '%tech-awx ALL=(ALL) NOPASSWD: ALL'
+    validate: 'visudo -cf %s'
 
 - name: Disable Root Login
   lineinfile:
