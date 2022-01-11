@@ -34,7 +34,6 @@
     executable: "/bin/bash"
   when:
     #- wg_syncconf
-    - not ansible_os_family == 'Darwin'
     - wireguard_service_enabled == "yes"
   listen: "reconfigure wireguard"
 
