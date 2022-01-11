@@ -5,6 +5,13 @@
 #     groups: wheel
 #     #expires: 1422403387
 #     #shell: /bin/zsh
+- name: Add grpups
+  group: 
+    name: tech_awx
+    state: present
+
+
+
 - name: Add several users
   ansible.builtin.user:
     name: "{{ item.name }}"
@@ -13,6 +20,9 @@
   loop:
     - { name: 'rolnik', groups: 'wheel' }
     - { name: 'rolnik', groups: 'tech_awx' }
+
+
+
 
 
 - name: sudoers line
