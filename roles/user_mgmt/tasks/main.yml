@@ -2,7 +2,7 @@
 
 - name: Concatenate a list of groups  to string
   set_fact:
-    memberofstring: '{{ memberof | join(',') }}'
+    memberofstring: "{{ memberof | join(',') }}"
   tags:
     - setfact
 
