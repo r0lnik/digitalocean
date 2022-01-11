@@ -9,10 +9,9 @@
 
 - name: Add grpups
   group: 
-    name: '{{ memberof.item }}'
+    name: '{{ item }}'
     state: present
-  loop:
-    - '{{ memberof }}'
+  loop: '{{ memberof }}'
   tags:
     - user_mgmt
 
