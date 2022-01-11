@@ -5,10 +5,10 @@
 #     groups: wheel
 #     #expires: 1422403387
 #     #shell: /bin/zsh
-- name: Add grpups
-  group: 
-    name: tech_awx
-    state: present
+# - name: Add grpups
+#   group: 
+#     name: tech_awx
+#     state: present
 
 
 
@@ -30,7 +30,7 @@
     path: /etc/sudoers
     state: present
     #egexp: '^%sudo'
-    line: '%tech-awx ALL=(ALL) NOPASSWD: ALL'
+    line: '%tech_awx ALL=(ALL) NOPASSWD: ALL'
     validate: 'visudo -cf %s'
 
 
