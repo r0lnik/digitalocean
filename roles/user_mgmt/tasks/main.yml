@@ -27,7 +27,7 @@
 
 
 
-- name: sudoers line
+- name: add sudoers line
   lineinfile:
     path: /etc/sudoers
     state: present
@@ -38,29 +38,29 @@
   tags:
     - sudoers
 
-- name: sudoers line
+- name: remove sudoers line
   lineinfile:
     path: /etc/sudoers
     state: absent
-    #egexp: '^%sudo'
+    regexp: '^%tech-awx'
     line: '%tech-awx ALL=(ALL) NOPASSWD: ALL'
-    validate: 'visudo -cf %s
+    validate: 'visudo -cf %s'
     backup: yes
   tags:
     - sudoers
 
-- name: Disable Root Login
+
+- name: sudoers line
   lineinfile:
-        dest: /etc/ssh/sshd_config
-        regexp: '^PermitRootLogin'
-        line: "PermitRootLogin no"
-        state: present
-        backup: yes
+    dest: '/etc/ssh/sshd_config'
+    regexp: '^PermitRootLogin'
+    line: "PermitRootLogin no"
+    state: present
+    backup: yes
   notify:
     - restart ssh
   tags:
     - sshdcfg
-
 
 - name: Set authorized key, removing all the authorized keys already set
   authorized_key:
