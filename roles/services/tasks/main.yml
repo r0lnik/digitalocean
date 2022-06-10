@@ -5,3 +5,10 @@
 - name: Print service facts
   ansible.builtin.debug:
     var: ansible_facts.services
+
+# Execute Host based task using variable
+- name: Execute the command only mwiapp01 server
+  become: yes
+  become_user: root 
+  shell: "uname -a"
+  when: "{{ ansible_hostname == 'mwiapp01'}}"
