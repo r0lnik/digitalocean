@@ -13,7 +13,7 @@
            #ansible_facts.services["oracle-tfa.service"]
   register: ngx_conf
 
-  - name: Print return information from the previous task
-    ansible.builtin.debug:
-    var: ngx_conf
-    verbosity: 2
+- name: Print return information from the previous task
+  ansible.builtin.debug:
+  var: ngx_conf
+  verbosity: 2
