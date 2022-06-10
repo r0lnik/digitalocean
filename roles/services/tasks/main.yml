@@ -2,13 +2,14 @@
 - name: Populate service facts
   ansible.builtin.service_facts:
 
-- name: Print service facts
-  ansible.builtin.debug:
-    var: ansible_facts.services
+# - name: Print service facts
+#   ansible.builtin.debug:
+#     var: ansible_facts.services
 
 # Execute Host based task using variable
-- name: Execute the command only mwiapp01 server
+- name: Execute the command only nginx server
   become: yes
   become_user: root 
-  shell: "uname -a"
-  when: "{{ ansible_hostname == 'mwiapp01'}}"
+  shell: "cat /etc/nginx/nginx.conf"
+  when: "{{ nginx.service is exist}}"
+  register: ngx_conf
