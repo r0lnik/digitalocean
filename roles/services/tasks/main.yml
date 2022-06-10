@@ -11,5 +11,5 @@
   become: yes
   become_user: root 
   shell: "cat /etc/nginx/nginx.conf"
-  when: ansible_facts.services.nginx.service is defined
+  when: ansible_facts.services.[nginx.service] is defined
   register: ngx_conf
