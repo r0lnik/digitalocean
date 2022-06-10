@@ -8,8 +8,6 @@
 
 # Execute Host based task using variable
 - name: Execute the command only nginx server
-  become: yes
-  become_user: root 
-  shell: "cat /etc/nginx/nginx.conf"
+  shell: cat /etc/nginx/nginx.conf
   when: ansible_facts.services.[nginx.service] is defined
   register: ngx_conf
