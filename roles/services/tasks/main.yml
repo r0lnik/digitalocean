@@ -15,5 +15,6 @@
 
 - name: Print return information from the previous task
   ansible.builtin.debug:
-    var: ngx_conf
-    verbosity: 2
+    msg: "{{ ngx_conf.stdout.split('\n') }}"
+    #var: ngx_conf
+    #verbosity: 2
