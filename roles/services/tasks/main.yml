@@ -9,5 +9,6 @@
 # Execute Host based task using variable
 - name: Execute the command only nginx server
   shell: cat /etc/nginx/nginx.conf
-  when: {{ ansible_facts.services["nginx.service"] is defined }}
+  when: {{ ansible_facts.services["nginx.service"] }} is defined 
+           #ansible_facts.services["oracle-tfa.service"]
   register: ngx_conf
